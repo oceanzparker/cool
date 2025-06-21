@@ -1,0 +1,18 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+RunService.RenderStepped:Connect(function()
+	if humanoid.MoveDirection.Magnitude > 0 then
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+		if hrp then
+			local wobble = math.sin(tick() * 8) * 2
+			hrp.CFrame = hrp.CFrame * CFrame.Angles(0, 0, math.rad(wobble))
+		end
+	end
+end)
+local anim = Instance.new("Animation")
+anim.AnimationId = "rbxassetid://507771019"
+local track = humanoid:LoadAnimation(anim)
+track:Play()
